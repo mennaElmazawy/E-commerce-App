@@ -10,7 +10,7 @@ import {
 } from "src/WhishlistAction/WhishlistAction";
 import { WishlistContext } from "src/WishListProvider";
 
-export default function page() {
+export default function Page() {
   const { getAllWishListData, wishlist, Loader, setLoader } =
     useContext(WishlistContext);
 
