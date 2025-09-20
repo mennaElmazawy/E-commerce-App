@@ -42,7 +42,7 @@ export default function ResetCode() {
   async function handleResetCode(values: zod.infer<typeof SchemeResetCode>) {
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/verifyResetCodes`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/verifyResetCode`,
         {
           method: "POST",
           headers: {
@@ -55,10 +55,10 @@ export default function ResetCode() {
       const data = await res.json();
       console.log(data);
 
-      if (data.statusMsg === "Success") {
-        router.push("/resetPassword");
+      if (data.status === "Success") {
+        router.push("/ResetPassword");
       } else {
-        toast.error(data.message || "Login failed", {
+        toast.error(data.message || "Invalid code", {
           position: "top-center",
         });
       }
@@ -69,7 +69,7 @@ export default function ResetCode() {
 
   return (
     <>
-      <h1>Send Email</h1>
+      <h1>Send Code</h1>
       <Form {...ResetCodeForm}>
         <form
           onSubmit={ResetCodeForm.handleSubmit(handleResetCode)}
@@ -80,7 +80,7 @@ export default function ResetCode() {
             name="resetCode"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>Code</FormLabel>
                 <FormControl>
                   <InputOTP
                     {...field}

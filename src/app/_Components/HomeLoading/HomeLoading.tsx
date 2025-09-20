@@ -10,6 +10,7 @@ export default function HomeLoading() {
         <Skeleton className="h-4 w-[200px]" />
       </div>
     </div>
+    
 
   )
 }

@@ -1,26 +1,21 @@
-import Image from "next/image";
-import { product, productData } from "src/types/products.type";
-import ProductCard from "./_Components/ProductCard/ProductCard";
 import MainSlider from "./_Components/MainSlider/MainSlider";
-import { Suspense } from "react";
-import HomeLoading from "./_Components/HomeLoading/HomeLoading";
+import CategorySlider from "./_Components/CategorySlider/CategorySlider";
+import { category, categoryResponseData } from "src/types/categories.type";
+import { getAllCategories } from "src/CategoriesAction/CategoriesAction";
+import { getAllProducts } from "src/ProductsAction/ProductsAction";
+import ProductsList from "./_Components/ProductCard/ProductList";
 
 export default async function Home() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/products`);
-  const data: productData = await res.json();
-  const productlist: product[] = data.data;
+  const response: categoryResponseData = await getAllCategories();
+  const categoryList: category[] = response.data;
+  const products = await getAllProducts();
+
   return (
     <>
       <MainSlider />
-      <Suspense fallback={<HomeLoading/>}>
-        {
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
-            {productlist.map((product) => {
-              return <ProductCard key={product._id} product={product} />;
-            })}
-          </div>
-        }
-      </Suspense>
+      <CategorySlider categoryList={categoryList} />
+
+      <ProductsList products={products.data} />
     </>
   );
 }

@@ -1,38 +1,3 @@
-// "use client";
-
-// import React, { useEffect } from 'react'
-// import { createContext, useState } from "react";
-// import { getUserToken } from './getUserToken';
-// import { getCartData } from './CartAction/CartAction';
-// import { CartData } from './types/cart.type';
-// import { useSession } from 'next-auth/react';
-
-// export const CountContext = createContext(undefined)
-// export default function CountProvider({ children }: { children: React.ReactNode }) {
-//    const [count, setCount] = useState(0);
-//    const { data: session } = useSession();
-
-//    async function getCart() {
-    
-//     if(session?.token){
-//       const data:CartData = await getCartData(session?.token);
-//       const sum = data.data.products.reduce((acc, item) => acc + item.count, 0);
-//       setCount(sum);
-      
-//     }
-    
-//    }
-
-//    useEffect(() => {
-//     getCart();
-//    },[session])
-//   return (
-//     <CountContext.Provider value={{ count, setCount }}>
-//       {children}
-//     </CountContext.Provider>
-//   );
-// }
-
 
 "use client";
 
@@ -49,7 +14,11 @@ export const CountContext = createContext<{
   setCount: () => {},
 });
 
-export default function CountProvider({ children }: { children: React.ReactNode }) {
+export default function CountProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [count, setCount] = useState(0);
   const { data: session } = useSession();
 
@@ -57,7 +26,10 @@ export default function CountProvider({ children }: { children: React.ReactNode 
     try {
       if (session?.user) {
         const data: CartData = await getCartData();
-        const sum = data.data.products.reduce((total, item) => total += item.count, 0);
+        const sum = data.data.products.reduce(
+          (total, item) => (total += item.count),
+          0
+        );
         setCount(sum);
       }
     } catch (err) {
@@ -75,3 +47,5 @@ export default function CountProvider({ children }: { children: React.ReactNode 
     </CountContext.Provider>
   );
 }
+
+

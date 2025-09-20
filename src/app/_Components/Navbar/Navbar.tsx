@@ -1,23 +1,15 @@
 "use client";
 
-import { useContext } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-import { usePathname } from "next/navigation";
+import { useContext, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { CountContext } from "../../../CountProvider";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
+  let pathname =usePathname()
   const { data, status } = useSession();
   const { count } = useContext(CountContext);
-  console.log(data);
+  const [isOpen, setIsOpen] = useState(false);
 
   const MenuItems: { path: string; content: string; protected: boolean }[] = [
     { path: "/Home", content: "Home", protected: false },
@@ -25,7 +17,7 @@ export default function Navbar() {
     { path: "/categories", content: "Categories", protected: false },
     { path: "/brands", content: "Brands", protected: false },
     { path: "/whishlist", content: "Whishlist", protected: false },
-    { path: "/allorders", content: "Orders", protected: true },
+    { path: "/allorders", content: "allorders", protected: true },
   ];
 
   const MenuAuthItems = [
@@ -38,117 +30,132 @@ export default function Navbar() {
   }
 
   return (
-    <div className="bg-main-light ">
-      <NavigationMenu
-        className="justify-between w-11/12 max-w-none mx-auto p-5 "
-        viewport={false}
-      >
-        {/* Logo */}
-        <NavigationMenuList>
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              asChild
-              className={navigationMenuTriggerStyle()}
+    <>
+      <nav className="bg-main-light border-gray-200 dark:bg-gray-900 fixed top-0 end-0 start-0 z-50 ">
+        <div className="max-w-screen-xl flex flex-wrap items-center justify-between  mx-auto  p-4">
+          <a
+            href="/"
+            className="flex items-center  space-x-3 rtl:space-x-reverse "
+          >
+            <i className="fa-solid fa-cart-shopping text-3xl text-main "></i>
+            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white ">
+              fresh cart
+            </span>
+          </a>
+
+          <button
+            data-collapse-toggle="navbar-cta"
+            type="button"
+            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            aria-controls="navbar-cta"
+            aria-expanded="false"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            <span className="sr-only">Open main menu</span>
+            <svg
+              className="w-5 h-5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 17 14"
             >
-              <Link className="bg-main-light flex flex-wrap" href="/">
-               <i className="fa-solid fa-cart-shopping text-3xl text-main "></i>
-               <span className="text-3xl">fresh cart</span>
-              </Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-        </NavigationMenuList>
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M1 1h15M1 7h15M1 13h15"
+              />
+            </svg>
+          </button>
 
-        {/* Main menu items */}
-        <NavigationMenuList>
-          {MenuItems.map((item) => (
-            <NavigationMenuItem key={item.path}>
-              {item.protected && status == "authenticated" && (
-                <NavigationMenuLink
-                  asChild
-                  className={navigationMenuTriggerStyle()}
-                >
-                  <Link className="bg-main-light nav-link" href={item.path}>
-                    {item.content}
-                  </Link>
-                </NavigationMenuLink>
-              )}
-
-              {!item.protected && (
-                <NavigationMenuLink
-                  asChild
-                  className={navigationMenuTriggerStyle()}
-                >
-                  <Link className="bg-main-light nav-link" href={item.path}>
-                    {item.content}
-                  </Link>
-                </NavigationMenuLink>
-              )}
-            </NavigationMenuItem>
-          ))}
-          {status == "authenticated" && (
-            <NavigationMenuItem>
-              <NavigationMenuLink
-                asChild
-                className={navigationMenuTriggerStyle()}
-              >
-                <Link className="bg-main-light nav-link" href="/cart">
-                  cart
-                </Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-          )}
-        </NavigationMenuList>
-
-        <NavigationMenuList>
-          {status == "authenticated" ? (
-            <>
-              <NavigationMenuItem>
-                <NavigationMenuLink
-                  asChild
-                  className={navigationMenuTriggerStyle()}
-                >
-                  <Link className="relative bg-main-light" href="/cart">
-                    <i className="fa-solid fa-cart-shopping text-3xl text-gray-600 ">
-                      <span className="font-family badge absolute -top-2 end-3 bg-main text-white w-5 h-5  flex justify-center items-center rounded-sm font-bold ">
-                        {count}
-                      </span>
-                    </i>
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink className={`${navigationMenuTriggerStyle()} bg-main-light`}>
-                  <span className=" p-2 nav-link">
-                    Hello {data?.user?.name}
-                  </span>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem className="cursor-pointer bg-main-light">
-                <NavigationMenuLink className={`${navigationMenuTriggerStyle()} bg-main-light`}>
-                  <span className=" nav-link" onClick={logout}>
-                    Log out
-                  </span>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            </>
-          ) : (
-            <>
-              {MenuAuthItems.map((item) => (
-                <NavigationMenuItem key={item.path}>
-                  <NavigationMenuLink
-                    asChild
-                    className={navigationMenuTriggerStyle()}
-                  >
-                    <Link className="bg-main-light nav-link" href={item.path}>
+          <div
+            className={`${
+              isOpen ? "flex" : "hidden"
+            } flex-col lg:basis-3/4 lg:justify-between w-full lg:flex-row lg:flex lg:w-auto `}
+            id="navbar-cta"
+          >
+            <ul className="flex flex-col bg-main-light  font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg  lg:flex-row lg:mt-0 md:border-0 lg:bg-white dark:bg-gray-800 lg:dark:bg-gray-900 dark:border-gray-700">
+              {MenuItems.map((item) => (
+                <li key={item.path}>
+                  {item.protected && status == "authenticated" && (
+                    <a
+                      className={`${pathname==item.path && `active`} block py-2 px-2 nav-link   rounded-sm   md:dark:text-blue-500`}
+                      href={item.path}
+                    >
                       {item.content}
-                    </Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
+                    </a>
+                  )}
+                  {!item.protected && (
+                    <a
+                      className={`${pathname==item.path && `active`} block py-2 px-2 nav-link   rounded-sm   md:dark:text-blue-500`}
+                      href={item.path}
+                    >
+                      {item.content}
+                    </a>
+                  )}
+                </li>
               ))}
-            </>
-          )}
-        </NavigationMenuList>
-      </NavigationMenu>
-    </div>
+             
+            </ul>
+
+            <ul
+              className="flex flex-col  font-medium p-4 lg:p-0 mt-4 border border-gray-100 rounded-lg 
+              lg:flex-row lg:mt-0 xl:border-0 
+             dark:bg-gray-800 lg:dark:bg-gray-900 dark:border-gray-700"
+            >
+              {status === "authenticated" ? (
+                <>
+                  
+                  <li>
+                    <a
+                      href="/cart"
+                      className=" block py-2 px-3 text-white  rounded-sm 
+                      "
+                    >
+                      <i className="fa-solid fa-cart-shopping text-3xl text-gray-600 relative ">
+                        <span className="font-family badge absolute -top-3 -end-1 bg-main text-white w-5 h-5 flex justify-center items-center rounded-sm font-bold">
+                          {count}
+                        </span>
+                      </i>
+                    </a>
+                  </li>
+                  <li className="bg-main-light ">
+                    <span className="p-2 block nav-link">
+                      Hello {data?.user?.name}
+                    </span>
+                  </li>
+                  <li className="cursor-pointer bg-main-light">
+                    <span
+                      className=" py-2 px-3 block text-white  rounded-sm md:bg-transparent nav-link md:dark:text-blue-500"
+                      onClick={() => {
+                        logout();
+                      }}
+                    >
+                      Log out
+                    </span>
+                  </li>
+                </>
+              ) : (
+                <>
+                  {MenuAuthItems.map((item: any) => (
+                    <li key={item.path}>
+                      <a
+                        href={item.path}
+                        className="block py-2 px-3 text-white nav-link rounded-sm 
+                         md:dark:text-blue-500"
+                      >
+                        {item.content}
+                      </a>
+                    </li>
+                  ))}
+                </>
+              )}
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </>
   );
 }
+

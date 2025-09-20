@@ -32,7 +32,7 @@ export default function ProductSlider({ images }: { images: string[] }) {
           })}
         </Slider>
       </div>
-      <div className="col-span-2"></div>
+      
     </div>
   );
 }

@@ -37,7 +37,7 @@ export default function ForgetPassword() {
   async function handleForgetPassword(values: zod.infer<typeof SchemeForgetPassword>) {
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/ForgetPasswords`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth//forgotPasswords`,
         {
           method: "POST",
           headers: {
@@ -52,7 +52,7 @@ export default function ForgetPassword() {
 
       if (data.statusMsg === "success") {
        
-        router.push("/resetCode");
+        router.push("/ResetCode");
       } else {
         toast.error(data.message || "Login failed", {
           position: "top-center",
@@ -64,8 +64,8 @@ export default function ForgetPassword() {
   }
 
   return (
-    <>
-      <h1>Send Email</h1>
+    <div className="w-3/4 my-5 mx-auto py-5">
+      <h1 className="text-2xl text-main">Send Email</h1>
       <Form {...ForgetPasswordForm}>
         <form
           onSubmit={ForgetPasswordForm.handleSubmit(handleForgetPassword)}
@@ -76,7 +76,7 @@ export default function ForgetPassword() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel className="my-2">Email</FormLabel>
                 <FormControl>
                   <Input type="email" {...field} />
                 </FormControl>
@@ -88,12 +88,12 @@ export default function ForgetPassword() {
 
          
 
-          <Button type="submit" className="w-full bg-main">
+          <Button type="submit" className=" bg-main">
             Send Email
           </Button>
         </form>
       </Form>
-    </>
+    </div>
   );
 }
 

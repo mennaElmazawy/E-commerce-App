@@ -1,180 +1,3 @@
-// "use client";
-
-// import React from "react";
-// import { Form, useForm } from "react-hook-form";
-// import { Button } from "src/components/ui/button";
-// import {
-//   FormControl,
-//   FormDescription,
-//   FormField,
-//   FormItem,
-//   FormLabel,
-//   FormMessage,
-// } from "src/components/ui/form";
-// import { Input } from "src/components/ui/input";
-// import { zodResolver } from "@hookform/resolvers/zod";
-// import * as zod from "zod";
-// import { toast } from "sonner";
-// import { useRouter } from "next/navigation";
-
-// export default function Register() {
-//   const router = useRouter();
-//   const SchemeRegister = zod
-//     .object({
-//       name: zod
-//         .string()
-//         .nonempty("Name is required")
-//         .min(2, "minimum 2 char")
-//         .max(15, "maximum 15 char "),
-//       email: zod.string().email("email is valid").nonempty("email is required"),
-//       password: zod
-//         .string()
-//         .nonempty("password is required")
-//         .regex(
-//           /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
-//           "password is not valid"
-//         ),
-//       rePassword: zod
-//         .string()
-//         .nonempty("password is required")
-//         .regex(
-//           /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
-//           "password is not valid"
-//         ),
-//       phone: zod
-//         .string()
-//         .nonempty("phone is required")
-//         .regex(/^(010|011|012|015)[0-9]{8}$/, "phone is not valid"),
-//     })
-//     .refine(
-//       (obj) => {
-//         return obj.password == obj.rePassword;
-//       },
-//       {
-//         path: ["rePassword"],
-//         error: "passwords do not match",
-//       }
-//     );
-//   const RegisterForm = useForm({
-//     defaultValues: {
-//       name: "",
-//       email: "",
-//       password: "",
-//       rePassword: "",
-//       phone: "",
-//     },
-//     resolver: zodResolver(SchemeRegister),
-//   });
-
-//   async function handleRegister(values: zod.infer<typeof SchemeRegister>) {
-//     const res = await fetch(
-//       `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/signup`,
-//       {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(values),
-//       }
-//     );
-//     const data = await res.json();
-//     console.log(data);
-//     if (data.messege === "success") {
-//       toast.success("Account created successfully !", {
-//         position: "top-center",
-//       });
-//       router.push("/login");
-//     } else {
-//       toast.error(data.messege), { position: "top-center" };
-//     }
-//   }
-//   return (
-//     <>
-//       <h1>Register now</h1>
-//       <Form {...RegisterForm}>
-//         <form
-//           onSubmit={RegisterForm.handleSubmit(handleRegister)}
-//           className="space-y-3"
-//         >
-//           <FormField
-//             control={RegisterForm.control}
-//             name="name"
-//             render={({ field }) => (
-//               <FormItem>
-//                 <FormLabel> Name</FormLabel>
-//                 <FormControl>
-//                   <Input type="text" {...field} />
-//                 </FormControl>
-//                 <FormDescription />
-//                 <FormMessage />
-//               </FormItem>
-//             )}
-//           />
-//           <FormField
-//             control={RegisterForm.control}
-//             name="email"
-//             render={({ field }) => (
-//               <FormItem>
-//                 <FormLabel> email</FormLabel>
-//                 <FormControl>
-//                   <Input type="email" {...field} />
-//                 </FormControl>
-//                 <FormDescription />
-//                 <FormMessage />
-//               </FormItem>
-//             )}
-//           />
-//           <FormField
-//             control={RegisterForm.control}
-//             name="password"
-//             render={({ field }) => (
-//               <FormItem>
-//                 <FormLabel> password</FormLabel>
-//                 <FormControl>
-//                   <Input type="password" {...field} />
-//                 </FormControl>
-//                 <FormDescription />
-//                 <FormMessage />
-//               </FormItem>
-//             )}
-//           />
-//           <FormField
-//             control={RegisterForm.control}
-//             name="rePassword"
-//             render={({ field }) => (
-//               <FormItem>
-//                 <FormLabel> rePassword</FormLabel>
-//                 <FormControl>
-//                   <Input type="password" {...field} />
-//                 </FormControl>
-//                 <FormDescription />
-//                 <FormMessage />
-//               </FormItem>
-//             )}
-//           />
-//          
-//           <FormField
-//             control={RegisterForm.control}
-//             name="phone"
-//             render={({ field }) => (
-//               <FormItem>
-//                 <FormLabel> phone</FormLabel>
-//                 <FormControl>
-//                   <Input type="tel" {...field} />
-//                 </FormControl>
-//                 <FormDescription />
-//                 <FormMessage />
-//               </FormItem>
-//             )}
-//           />
-//           <Button className="w-full bg-main">Register</Button>
-//         </form>
-//       </Form>
-//     </>
-//   );
-// }
-
-
 "use client";
 
 import React from "react";
@@ -183,7 +6,6 @@ import { Button } from "src/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -272,20 +94,20 @@ export default function Register() {
   }
 
   return (
-    <>
-      <h1>Register now</h1>
+    <div className="w-3/4 mx-auto">
+      <h1 className="my-5 text-2xl">Register now</h1>
       <Form {...RegisterForm}>
         <form
           onSubmit={RegisterForm.handleSubmit(handleRegister)}
           className="space-y-3"
         >
-          {/* Name */}
+          
           <FormField
             control={RegisterForm.control}
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel>Name: </FormLabel>
                 <FormControl>
                   <Input type="text" {...field} />
                 </FormControl>
@@ -294,13 +116,12 @@ export default function Register() {
             )}
           />
 
-          {/* Email */}
           <FormField
             control={RegisterForm.control}
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>Email: </FormLabel>
                 <FormControl>
                   <Input type="email" {...field} />
                 </FormControl>
@@ -309,13 +130,13 @@ export default function Register() {
             )}
           />
 
-          {/* Password */}
+         
           <FormField
             control={RegisterForm.control}
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>Password: </FormLabel>
                 <FormControl>
                   <Input type="password" {...field} />
                 </FormControl>
@@ -324,13 +145,13 @@ export default function Register() {
             )}
           />
 
-          {/* Confirm Password */}
+         
           <FormField
             control={RegisterForm.control}
             name="rePassword"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Confirm Password</FormLabel>
+                <FormLabel>Confirm Password: </FormLabel>
                 <FormControl>
                   <Input type="password" {...field} />
                 </FormControl>
@@ -339,13 +160,13 @@ export default function Register() {
             )}
           />
 
-          {/* Phone */}
+       
           <FormField
             control={RegisterForm.control}
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Phone</FormLabel>
+                <FormLabel>Phone: </FormLabel>
                 <FormControl>
                   <Input type="tel" {...field} />
                 </FormControl>
@@ -354,12 +175,14 @@ export default function Register() {
             )}
           />
 
-          <Button type="submit" className="w-full bg-main">
-            Register
+         <div className="flex justify-end">
+           <Button type="submit" className="font-normal bg-white border border-gray-400 text-gray-400 hover:bg-white text-xl">
+            Register Now
           </Button>
+         </div>
         </form>
       </Form>
-    </>
+    </div>
   );
 }
 

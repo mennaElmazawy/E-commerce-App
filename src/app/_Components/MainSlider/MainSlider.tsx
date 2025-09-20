@@ -15,39 +15,59 @@ export default function MainSlider() {
     autoplaySpeed: 1000,
   };
   return (
-    <div className="grid grid-cols-12 my-6">
-      <div className="col-span-10">
+
+    <div className="flex w-3/4 my-5 flex-col md:flex-row md:w-1/3 mx-auto">
+      <div className=" md:w-1/2 m-3 md:m-0">
         <Slider {...settings}>
           <div>
             <Image
-              src="/images/slider-image-1.jpeg"
+              src="/images/bag.jpg"
               alt="img1"
-              width={1000}
-              height={1000}
-              className="w-full h-96 object-cover"
+              width={100}
+              height={100}
+              className="w-full  object-cover"
             />
           </div>
           <div>
             <Image
-              src="/images/slider-image-2.jpeg"
+              src="/images/seat.jpg"
               alt="img2"
-              width={1000}
-              height={1000}
-              className="w-full h-96 object-cover"
+              width={100}
+              height={100}
+              className="w-full  object-cover"
             />
           </div>
           <div>
             <Image
-              src="/images/slider-image-3.jpeg"
+              src="/images/rings.jpg"
               alt="img3"
-              width={1000}
-              height={1000}
-              className="w-full h-96 object-cover"
+              width={100}
+              height={100}
+              className="w-full  object-cover"
             />
           </div>
         </Slider>
       </div>
-      <div className="col-span-2"></div>
+      <div className="md:w-1/2 m-4 md:m-0 flex flex-col">
+        <div className="h-1/2">
+          <Image
+            src="/images/bagsss.jpg"
+            alt="img4"
+            width={100}
+            height={100}
+            className="w-full  object-cover"
+          />
+        </div>
+        <div className="h-1/2">
+          <Image
+            src="/images/music.jpg"
+            alt="img5"
+            width={100}
+            height={100}
+            className="w-full  object-cover"
+          />
+        </div>
+      </div>
     </div>
   );
 }

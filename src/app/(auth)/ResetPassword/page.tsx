@@ -17,10 +17,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from "zod";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+
 
 export default function ResetPassword() {
-  const router = useRouter();
+  const Route = useRouter();
 
   const SchemeResetPassword = zod.object({
     email: zod
@@ -43,10 +43,10 @@ export default function ResetPassword() {
     resolver: zodResolver(SchemeResetPassword),
   });
 
-  async function handleLogin(values: zod.infer<typeof SchemeResetPassword>) {
+  async function handleResetPassword(values: zod.infer<typeof SchemeResetPassword>) {
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/ResetPassword`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/resetPassword`,
         {
           method: "Put",
           headers: {
@@ -61,7 +61,7 @@ export default function ResetPassword() {
 
       if (data.token ) {
        
-        router.push("/login");
+        Route.push("/Login");
       } else {
         toast.error(data.message || "Login failed", {
           position: "top-center",
@@ -73,11 +73,11 @@ export default function ResetPassword() {
   }
 
   return (
-    <>
-      <h1>ResetPassword now</h1>
+    <div className="p-5 w-3/4 mx-auto">
+      <h1 className="p-5 text-2xl">Reset Password now</h1>
       <Form {...LoginForm}>
         <form
-          onSubmit={LoginForm.handleSubmit(handleLogin)}
+          onSubmit={LoginForm.handleSubmit(handleResetPassword)}
           className="space-y-3"
         >
           <FormField
@@ -115,6 +115,6 @@ export default function ResetPassword() {
           </Button>
         </form>
       </Form>
-    </>
+    </div>
   );
 }
