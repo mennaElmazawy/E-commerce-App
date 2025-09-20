@@ -8,13 +8,13 @@ import { getWishListData } from "./WhishlistAction/WhishlistAction";
 export const WishlistContext = createContext<{
   wishlist: whishListItem[];
   setWishlist: React.Dispatch<React.SetStateAction<whishListItem[]>>;
-  getAllWishListData: any;
+  getAllWishListData:() => Promise<void>;
   Loader: boolean;
   setLoader:React.Dispatch<React.SetStateAction<boolean>>;
 }>({
   wishlist: [],
   setWishlist: () => {},
-  getAllWishListData: () => {},
+  getAllWishListData: async () => {}, 
   Loader: false,
   setLoader:() => {}
 });

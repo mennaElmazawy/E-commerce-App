@@ -4,9 +4,10 @@ import { useContext, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { CountContext } from "../../../CountProvider";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 export default function Navbar() {
-  let pathname =usePathname()
+  const pathname =usePathname()
   const { data, status } = useSession();
   const { count } = useContext(CountContext);
   const [isOpen, setIsOpen] = useState(false);
@@ -33,7 +34,7 @@ export default function Navbar() {
     <>
       <nav className="bg-main-light border-gray-200 dark:bg-gray-900 fixed top-0 end-0 start-0 z-50 ">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between  mx-auto  p-4">
-          <a
+          <Link
             href="/"
             className="flex items-center  space-x-3 rtl:space-x-reverse "
           >
@@ -41,7 +42,7 @@ export default function Navbar() {
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white ">
               fresh cart
             </span>
-          </a>
+          </Link>
 
           <button
             data-collapse-toggle="navbar-cta"
@@ -79,20 +80,20 @@ export default function Navbar() {
               {MenuItems.map((item) => (
                 <li key={item.path}>
                   {item.protected && status == "authenticated" && (
-                    <a
+                    <Link
                       className={`${pathname==item.path && `active`} block py-2 px-2 nav-link   rounded-sm   md:dark:text-blue-500`}
                       href={item.path}
                     >
                       {item.content}
-                    </a>
+                    </Link>
                   )}
                   {!item.protected && (
-                    <a
+                    <Link
                       className={`${pathname==item.path && `active`} block py-2 px-2 nav-link   rounded-sm   md:dark:text-blue-500`}
                       href={item.path}
                     >
                       {item.content}
-                    </a>
+                    </Link>
                   )}
                 </li>
               ))}
@@ -108,7 +109,7 @@ export default function Navbar() {
                 <>
                   
                   <li>
-                    <a
+                    <Link
                       href="/cart"
                       className=" block py-2 px-3 text-white  rounded-sm 
                       "
@@ -118,7 +119,7 @@ export default function Navbar() {
                           {count}
                         </span>
                       </i>
-                    </a>
+                    </Link>
                   </li>
                   <li className="bg-main-light ">
                     <span className="p-2 block nav-link">
@@ -138,15 +139,15 @@ export default function Navbar() {
                 </>
               ) : (
                 <>
-                  {MenuAuthItems.map((item: any) => (
+                  {MenuAuthItems.map((item) => (
                     <li key={item.path}>
-                      <a
+                      <Link
                         href={item.path}
                         className="block py-2 px-3 text-white nav-link rounded-sm 
                          md:dark:text-blue-500"
                       >
                         {item.content}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </>

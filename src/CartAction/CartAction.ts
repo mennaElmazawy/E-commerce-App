@@ -5,7 +5,7 @@ import { CartData } from "src/types/cart.type";
 
 
 export async function getCartData() {
-    const token: any = await getUserToken();
+    const token = await getUserToken();
 
     if (!token) {
         throw new Error('Token error');
@@ -13,7 +13,7 @@ export async function getCartData() {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/cart`,
         {
             headers: {
-                token
+                token: token as string
             }
         }
     )
@@ -23,7 +23,7 @@ export async function getCartData() {
 
 
 export async function AddProductToCart(id:string) {
-     const token: any = await getUserToken();
+     const token = await getUserToken();
 
     if (!token) {
         throw new Error('Token error');
@@ -33,7 +33,7 @@ export async function AddProductToCart(id:string) {
             method: 'POST',
             body: JSON.stringify({ productId: id }),
             headers: {
-                token: token,
+                token: token as string,
                 'Content-Type': 'application/json'
             }
 
@@ -45,7 +45,7 @@ export async function AddProductToCart(id:string) {
 }
 
 export async function RemoveProduct(id:string) {
-    const token: any = await getUserToken();
+    const token = await getUserToken();
 
     if (!token) {
         throw new Error('Token error');
@@ -54,7 +54,7 @@ export async function RemoveProduct(id:string) {
         {
             method: 'DELETE',
             headers: {
-                token
+               token: token as string
             }
         }
     )
@@ -64,7 +64,7 @@ export async function RemoveProduct(id:string) {
 
 
 export async function ClearCart() {
-      const token: any = await getUserToken();
+      const token = await getUserToken();
 
     if (!token) {
         throw new Error('Token error');
@@ -73,7 +73,7 @@ export async function ClearCart() {
         {
             method: 'DELETE',
             headers: {
-                token
+               token: token as string
             }
         }
     )
@@ -83,7 +83,7 @@ export async function ClearCart() {
 
 
 export async function UpdateProductQuantity(id:string, count:number) {
-      const token: any = await getUserToken();
+      const token = await getUserToken();
 
     if (!token) {
         throw new Error('Token error');
@@ -93,7 +93,7 @@ export async function UpdateProductQuantity(id:string, count:number) {
             method: 'put',
             body: JSON.stringify({ count: count }),
             headers: {
-                token,
+                token: token as string,
                 'Content-Type': 'application/json'
             }
         }

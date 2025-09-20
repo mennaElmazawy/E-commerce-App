@@ -7,14 +7,14 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 import { category } from "src/types/categories.type";
-import { SubCategoryResponseData } from "src/types/subCategories.type";
+import { SubCategory, SubCategoryResponseData } from "src/types/subCategories.type";
 
 
 export default function CategoryCard({
   category, setSubCategoriesList,setLoader}: {
   category: category;
-  setSubCategoriesList: any;
-  setLoader: any;
+  setSubCategoriesList: React.Dispatch<React.SetStateAction<SubCategory[]>>
+  setLoader:  React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const { image, name, _id } = category;
 

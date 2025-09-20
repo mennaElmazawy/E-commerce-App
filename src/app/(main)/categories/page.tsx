@@ -1,7 +1,5 @@
 "use client";
-
-
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import CategoryCard from "src/app/_Components/CategoryCard/CategoryCard";
 import SubcategoryCard from "src/app/_Components/SubcategoryCard/page";
 import loading from "src/app/loading";
@@ -11,7 +9,7 @@ import { SubCategory } from "src/types/subCategories.type";
 
 
 
-export default function page() {
+export default function Page() {
   
   const [subCategoriesList, setSubCategoriesList] = useState<SubCategory[]>([]);
   const [categorylist, setCategoryList] = useState<category[]>([]);
@@ -53,7 +51,7 @@ export default function page() {
       </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 px-5 w-11/12 p-5 mx-auto">
-        {subCategoriesList.map((subCategory: any) => (
+        {subCategoriesList.map((subCategory: SubCategory) => (
           <div key={subCategory._id}>
             <SubcategoryCard subCategory={subCategory} />
           </div>

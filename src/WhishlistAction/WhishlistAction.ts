@@ -5,7 +5,7 @@ import { wishlistResponse } from "src/types/WhishList.type";
 
 
 export async function getWishListData() {
-    const token: any = await getUserToken();
+    const token = await getUserToken();
 
     if (!token) {
         throw new Error('Token error');
@@ -13,7 +13,7 @@ export async function getWishListData() {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/wishlist`,
         {
             headers: {
-                token
+                token: token as string
             }
         }
     )
@@ -23,7 +23,7 @@ export async function getWishListData() {
 
 
 export async function AddProductToWishList(id:string) {
-     const token: any = await getUserToken();
+     const token= await getUserToken();
 
     if (!token) {
         throw new Error('Token error');
@@ -33,7 +33,7 @@ export async function AddProductToWishList(id:string) {
             method: 'POST',
             body: JSON.stringify({ productId:id }),
             headers: {
-                token: token,
+                token: token as string,
                 'Content-Type': 'application/json'
             }
 
@@ -45,7 +45,7 @@ export async function AddProductToWishList(id:string) {
 }
 
 export async function RemoveProduct(id:string) {
-    const token: any = await getUserToken();
+    const token = await getUserToken();
 
     if (!token) {
         throw new Error('Token error');
@@ -54,7 +54,7 @@ export async function RemoveProduct(id:string) {
         {
             method: 'DELETE',
             headers: {
-                token
+             token: token as string
             }
         }
     )
