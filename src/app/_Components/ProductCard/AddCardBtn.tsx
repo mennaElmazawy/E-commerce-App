@@ -33,6 +33,7 @@ export default function AddCardBtn({
         toast.error("Incorrect Id", { position: "top-center" });
       }
     } catch (err) {
+      
       toast.error("Please login to add products to cart", {
         position: "top-center",
       });

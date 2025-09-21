@@ -7,7 +7,10 @@ import { getAllCategories } from "src/CategoriesAction/CategoriesAction";
 import { category, categoryResponseData } from "src/types/categories.type";
 import { SubCategory } from "src/types/subCategories.type";
 
+
+
 export default function Page() {
+  
   const [subCategoriesList, setSubCategoriesList] = useState<SubCategory[]>([]);
   const [categorylist, setCategoryList] = useState<category[]>([]);
   const [categoryTitle, setCategoryTitle] = useState<string>("");
@@ -16,10 +19,7 @@ export default function Page() {
   useEffect(() => {
     async function getCategories() {
       setLoader(true);
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/categories`
-      );
-      const data: categoryResponseData = await res.json();
+      const data= await getAllCategories()
       setCategoryList(data.data);
       setLoader(false);
     }
@@ -28,7 +28,7 @@ export default function Page() {
 
   return (
     <div className="py-5 ">
-      {Loader && <div>{loading()}</div>}
+      {Loader && <div >{loading()}</div>}
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 px-5 w-11/12 p-5 mx-auto">
         {categorylist.map((category: category) => (
@@ -40,7 +40,7 @@ export default function Page() {
               key={category._id}
               category={category}
               setSubCategoriesList={setSubCategoriesList}
-              setLoader={setLoader}
+               setLoader={setLoader}
             />
           </div>
         ))}

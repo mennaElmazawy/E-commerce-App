@@ -4,8 +4,10 @@ import { cookies } from "next/headers";
 
 export async function getUserToken() {
 
+
+    const TokenSession =(process.env.Node_ENV ==="production"?'_Secure-next-auth.session-token':"next-auth.session-token")
     const cookiesData = await cookies()
-    const encryptedToken = cookiesData.get("next-auth.session-token")?.value
+    const encryptedToken = cookiesData.get(TokenSession)?.value
 
     const data = await decode({ token: encryptedToken, secret: process.env.NEXTAUTH_SECRET! })
     
@@ -14,8 +16,9 @@ export async function getUserToken() {
 
 
 export async function getUserIdFromToken() {
+    const TokenSession =(process.env.Node_ENV ==="production"?'_Secure-next-auth.session-token':"next-auth.session-token")
     const cookiesData = await cookies()
-    const encryptedToken = cookiesData.get("next-auth.session-token")?.value
+    const encryptedToken = cookiesData.get(TokenSession)?.value
 
     const data = await decode({ token: encryptedToken, secret: process.env.NEXTAUTH_SECRET! })
     return data?.sub

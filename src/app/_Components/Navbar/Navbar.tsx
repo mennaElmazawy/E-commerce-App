@@ -17,7 +17,7 @@ export default function Navbar() {
     { path: "/products", content: "Products", protected: false },
     { path: "/categories", content: "Categories", protected: false },
     { path: "/brands", content: "Brands", protected: false },
-    { path: "/whishlist", content: "Whishlist", protected: false },
+    { path: "/wishlist", content: "Wishlist", protected: false },
     { path: "/allorders", content: "allorders", protected: true },
   ];
 
