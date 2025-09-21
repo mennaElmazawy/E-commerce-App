@@ -11,7 +11,7 @@ export async function getUserToken() {
             : "next-auth.session-token";
     const cookiesData = await cookies()
     const encryptedToken = cookiesData.get(TokenSession)?.value
-    if (!encryptedToken) return null;
+   
     const data = await decode({ token: encryptedToken, secret: process.env.NEXTAUTH_SECRET! })
 
     return data?.token
@@ -25,7 +25,7 @@ export async function getUserIdFromToken() {
             : "next-auth.session-token";
     const cookiesData = await cookies()
     const encryptedToken = cookiesData.get(TokenSession)?.value
-    if (!encryptedToken) return null;
+    
     const data = await decode({ token: encryptedToken, secret: process.env.NEXTAUTH_SECRET! })
     return data?.sub
 }
